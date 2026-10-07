@@ -14,15 +14,19 @@ const HEADER_PATTERNS = [
 ];
 const SYSTEM_LINE_PATTERN = new RegExp("^\\[?" + DATE_TIME + "\\]?\\s-\\s", "i");
 
-function matchHeader(line: string): HeaderMatch | null {
+function matchHeader(line: string, myName: string): HeaderMatch | null {
   for (const pattern of HEADER_PATTERNS) {
     const match = line.match(pattern);
     if (!match) continue;
     const [, dateTime, senderAndText] = match;
-    const separator = senderAndText.lastIndexOf(":");
+    const selfPrefix = myName + ":";
+    const separator = senderAndText.startsWith(selfPrefix)
+      ? myName.length
+      : senderAndText.indexOf(": ");
     if (separator === -1) continue;
     const sender = senderAndText.slice(0, separator).trim();
-    const text = senderAndText.slice(separator + 1).replace(/^\s/, "");
+    const text = senderAndText
+      .slice(separator + (senderAndText.startsWith(selfPrefix) ? 1 : 2));
     if (!sender) continue;
     const comma = dateTime.indexOf(",");
     return { date: dateTime.slice(0, comma), time: dateTime.slice(comma + 1).trim(), sender, text };
@@ -47,7 +51,7 @@ export function parseWhatsAppExport(input: string, myName: string, conversationI
   let current: Message | null = null;
 
   for (const rawLine of normalizeInput(input).split(/\r?\n/)) {
-    const header = matchHeader(rawLine);
+    const header = matchHeader(rawLine, normalizedMyName);
     if (header) {
       current = {
         id: "msg_" + (messages.length + 1),
