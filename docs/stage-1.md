@@ -1,12 +1,37 @@
 # Stage 1 — Chat Data Pipeline
 
-Goal: WhatsApp export → canonical messages → reply-pair dataset.
+## Done
 
-Definition of done:
-- WhatsApp text exports parse correctly.
-- Multiline messages are preserved.
-- User messages are identified.
-- Reply pairs preserve recent context.
-- Tests pass.
+- [x] Canonical message schema
+- [x] WhatsApp parser
+- [x] Multiline messages
+- [x] Reply-pair construction
+- [x] JSONL writer
+- [x] CLI importer
+- [x] End-to-end tests
 
-Next: CLI import, cleaning rules, JSONL writer, and validation against a real export.
+## Usage
+
+```bash
+npm install
+npm run import -- --input ./chat.txt --me "Your Name"
+```
+
+Optional:
+
+```bash
+npm run import -- --input ./chat.txt --me "Your Name" --conversation-id girlfriend --output ./data/processed
+```
+
+Generated files:
+
+- `messages.jsonl` — canonical parsed messages
+- `reply_pairs.jsonl` — conversation context → user's reply
+
+## Important
+
+Never commit your real chat export or generated personal dataset. These are ignored by `.gitignore`.
+
+## Next
+
+Validate the parser against a real export, then add robust cleaning and media/system-message handling.
