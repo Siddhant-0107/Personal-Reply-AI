@@ -15,7 +15,7 @@
 - [x] Media/deleted-message placeholders preserved
 - [x] Empty message payloads preserved
 - [x] Timestamped system/event lines ignored
-- [x] Sender names containing colons supported
+- [x] Self sender names containing colons supported
 - [x] URLs and message text containing colons preserved
 
 ## Usage
@@ -57,7 +57,7 @@ It also handles:
 - deleted-message placeholder text
 - messages with URLs
 - message text containing colons
-- sender names containing colons
+- self sender names containing colons
 - empty message payloads
 
 Timestamped WhatsApp system/event lines without a valid sender/message header are ignored rather than appended to the previous message.
