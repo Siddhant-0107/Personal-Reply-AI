@@ -1,0 +1,15 @@
+node_modules/
+.env
+.env.*
+!.env.example
+
+data/raw/
+data/processed/
+*.json
+*.jsonl
+
+dist/
+coverage/
+.DS_Store
+.vscode/
+.idea/
