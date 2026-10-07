@@ -1,0 +1,2 @@
+import type { Message, ReplyPair } from "../types/message.js";
+export function buildReplyPairs(messages:Message[],contextSize=6):ReplyPair[]{const pairs:ReplyPair[]=[];for(let i=0;i<messages.length;i++){const reply=messages[i];if(!reply.isMe||!reply.text.trim())continue;const context=messages.slice(Math.max(0,i-contextSize),i).filter(m=>m.text.trim());if(!context.length)continue;pairs.push({conversationId:reply.conversationId,context,reply});}return pairs;}
