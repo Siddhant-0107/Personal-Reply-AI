@@ -31,7 +31,11 @@ function matchHeader(line: string): HeaderMatch | null {
 }
 
 function normalizeInput(input: string): string {
-  return input.replace(/^\uFEFF/, "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  return input
+    .replace(/^\uFEFF/, "")
+    .replace(/[\u200E\u200F\u2066-\u2069]/g, "")
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n");
 }
 
 /** Parse a WhatsApp text export into canonical messages. */
