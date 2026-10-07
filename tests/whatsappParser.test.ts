@@ -7,7 +7,7 @@ describe("parseWhatsAppExport", () => {
       "7/10/26, 5:32 AM - Alice: morning",
       "07/10/2026, 17:33 - Me: done",
       "[7/10/2026, 17:34] Alice: okay",
-    ].join("\\n");
+    ].join("\n");
 
     const messages = parseWhatsAppExport(input, "Me", "test");
 
@@ -23,19 +23,19 @@ describe("parseWhatsAppExport", () => {
       "7/10/26, 5:32 AM - Me: kya scene hai 😭",
       "kal library aa raha hu",
       "थोड़ा late होगा 😂",
-    ].join("\\n");
+    ].join("\n");
 
     const messages = parseWhatsAppExport(input, "Me");
 
     expect(messages).toHaveLength(1);
-    expect(messages[0].text).toBe("kya scene hai 😭\\nkal library aa raha hu\\nथोड़ा late होगा 😂");
+    expect(messages[0].text).toBe("kya scene hai 😭\nkal library aa raha hu\nथोड़ा late होगा 😂");
   });
 
   it("parses media omitted and deleted-message placeholders as normal message text", () => {
     const input = [
       "7/10/26, 5:32 AM - Alice: <Media omitted>",
       "7/10/26, 5:33 AM - Me: This message was deleted",
-    ].join("\\n");
+    ].join("\n");
 
     const messages = parseWhatsAppExport(input, "Me");
 
@@ -49,7 +49,7 @@ describe("parseWhatsAppExport", () => {
       "7/10/26, 5:32 AM - Alice: hello",
       "7/10/26, 5:33 AM - Messages and calls are end-to-end encrypted. No one outside of this chat can read or listen to them.",
       "7/10/26, 5:34 AM - Me: hi",
-    ].join("\\n");
+    ].join("\n");
 
     const messages = parseWhatsAppExport(input, "Me");
 
@@ -61,7 +61,7 @@ describe("parseWhatsAppExport", () => {
     const input = [
       "7/10/26, 5:32 AM - Dr: Strange: https://example.com/a:b",
       "7/10/26, 5:33 AM - Me: got it: thanks",
-    ].join("\\n");
+    ].join("\n");
 
     const messages = parseWhatsAppExport(input, "Me");
 
@@ -86,13 +86,13 @@ describe("parseWhatsAppExport", () => {
       "",
       "7/10/26, 5:33 AM - Me: hi",
       "",
-    ].join("\\n");
+    ].join("\n");
 
     expect(parseWhatsAppExport(input, "Me")).toHaveLength(2);
   });
 
   it("strips a UTF-8 BOM", () => {
-    const input = "\\uFEFF7/10/26, 5:32 AM - Me: hello";
+    const input = "\uFEFF7/10/26, 5:32 AM - Me: hello";
     expect(parseWhatsAppExport(input, "Me")[0].text).toBe("hello");
   });
 
