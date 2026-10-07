@@ -63,7 +63,7 @@ describe("parseWhatsAppExport", () => {
       "7/10/26, 5:33 AM - Me: got it: thanks",
     ].join("\n");
 
-    const messages = parseWhatsAppExport(input, "Me");
+    const messages = parseWhatsAppExport(input, "Dr: Strange");
 
     expect(messages).toHaveLength(2);
     expect(messages[0].sender).toBe("Dr: Strange");
