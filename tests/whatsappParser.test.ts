@@ -99,9 +99,6 @@ describe("parseWhatsAppExport", () => {
   it("rejects an empty self name", () => {
     expect(() => parseWhatsAppExport("anything", "   ")).toThrow("myName must not be empty");
   });
-});
-
-
   it("strips invisible Unicode direction marks before parsing", () => {
     const input = "\u200E[7/10/2026, 17:34] Me: hello";
     const messages = parseWhatsAppExport(input, "Me");
@@ -109,3 +106,4 @@ describe("parseWhatsAppExport", () => {
     expect(messages[0].sender).toBe("Me");
     expect(messages[0].text).toBe("hello");
   });
+});
